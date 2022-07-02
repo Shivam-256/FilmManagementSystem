@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore_WebApi_FMS", "AspNetCore_WebApi_FMS\AspNetCore_WebApi_FMS.csproj", "{FA9DD089-F044-4365-AB01-7C848ED89440}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore_MVC_FMS", "AspNetCore_MVC_FMS\AspNetCore_MVC_FMS.csproj", "{07008159-FBC7-45C4-9843-164A9F65A0FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA9DD089-F044-4365-AB01-7C848ED89440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA9DD089-F044-4365-AB01-7C848ED89440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA9DD089-F044-4365-AB01-7C848ED89440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA9DD089-F044-4365-AB01-7C848ED89440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07008159-FBC7-45C4-9843-164A9F65A0FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07008159-FBC7-45C4-9843-164A9F65A0FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07008159-FBC7-45C4-9843-164A9F65A0FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07008159-FBC7-45C4-9843-164A9F65A0FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6ADBDE0-AAAB-492E-BD99-E4C75E15D85B}
+	EndGlobalSection
+EndGlobal
