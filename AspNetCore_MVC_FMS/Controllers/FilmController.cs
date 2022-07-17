@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using AspNetCore_MVC_FMS.Models;
 using System.Collections.Generic;
 
-namespace AspNetCore_Mvc_Demo.Controllers
+namespace AspNetCore_Mvc_FMS.Controllers
 {
     public class FilmController : Controller
     {
@@ -28,7 +28,7 @@ namespace AspNetCore_Mvc_Demo.Controllers
                     Task<string> data = result.Content.ReadAsStringAsync();
                     fmList = JsonConvert.DeserializeObject<IEnumerable<FilmVM>>(data.Result);
                 }
-                return View (fmList);
+                return View("index", fmList);
             }
         }
         public IActionResult Index()
@@ -44,8 +44,23 @@ namespace AspNetCore_Mvc_Demo.Controllers
             {
                 Task<string> data = result.Content.ReadAsStringAsync();
                 fmList = JsonConvert.DeserializeObject<IEnumerable<FilmVM>>(data.Result);
+                {
+                    return View(fmList);
+                }
             }
-            return View(fmList);
+            else
+            {
+                if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    ViewBag.message = "You are unauthorized, Error";
+                else if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                    ViewBag.message = "Forbidden, Error";
+                else
+                    ViewBag.message = "Unknown error, Contact Admin";
+                {
+                    return RedirectToAction("ErrorHandling", "Home");
+                }
+            }
+
         }
 
        //doubt
@@ -53,6 +68,8 @@ namespace AspNetCore_Mvc_Demo.Controllers
         {
             TableDataVM tbList = null;
             HttpClient client = new HttpClient();
+            string token = Request.Cookies["jwttoken"];
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             Uri uri = new Uri("https://localhost:44320/api/tabledatas");
             var result = client.GetAsync(uri).Result;
             if (result.IsSuccessStatusCode)
@@ -65,14 +82,18 @@ namespace AspNetCore_Mvc_Demo.Controllers
                 var lngList = tbList.Languages;
                 //TempData["deptList"] = deptList;
                 //TempData.Keep();
-                SelectList sl = new SelectList(actList, "actorId", "FirstName");
-                SelectList sl1 = new SelectList(cgyList, "categoryId", "Name"); 
-                SelectList sl2 = new SelectList(lngList, "languageId", "Name");
+                SelectList sl = new SelectList(actList, "ActorId", "FirstName");
+                SelectList sl1 = new SelectList(cgyList, "CategoryId", "Name"); 
+                SelectList sl2 = new SelectList(lngList, "LanguageId", "Name");
                 ViewBag.actList = sl;
-                ViewBag.tbList = sl1;
-                ViewBag.tbList = sl2;
+                ViewBag.cgyList = sl1;
+                ViewBag.lngList = sl2;
+                return View();
             }
-            return View();
+            else
+            {
+                return RedirectToAction("ErrorHandling","Home");
+            }
         }
 
         [HttpPost]
@@ -102,7 +123,7 @@ namespace AspNetCore_Mvc_Demo.Controllers
                 string token = Request.Cookies["jwttoken"];
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                Uri uri = new Uri("https://localhost:44320/film/" + id.ToString());
+                Uri uri = new Uri("https://localhost:44320/films/" + id.ToString());
                 var result = client.DeleteAsync(uri).Result;
                 if (result.IsSuccessStatusCode)
                 {
@@ -128,7 +149,7 @@ namespace AspNetCore_Mvc_Demo.Controllers
                 var result = client.GetAsync(uri).Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    Task<string> data = result.Content.ReadAsStringAsync();
+                    var data = result.Content.ReadAsStringAsync();
                     fm = JsonConvert.DeserializeObject<FilmVM>(data.Result);
                     return View(fm);
                 }

@@ -1,5 +1,6 @@
 ﻿using AspNetCore_WebApi_FMS.Data;
 using AspNetCore_WebApi_FMS.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+ // [Authorize(Roles = "Admin")]
     public class CategoriesController : ControllerBase
     {
         private ICategory _repository;
@@ -44,6 +46,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
         }
 
         [HttpDelete]
+        [Route("{categoryId}")]
         public IActionResult Delete(int categoryId)
         {
             bool result = _repository.DeleteCategory(categoryId);
@@ -58,6 +61,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
         }
 
         [HttpPut]
+        [Route("{categoryId}")]
         public IActionResult Put(int categoryId, [FromBody] Category cgy)
         {
             _repository.UpdateCategory(categoryId, cgy);

@@ -17,6 +17,14 @@ namespace AspNetCore_WebApi_FMS.Repositories
 
             return fmList;
         }
+        public IEnumerable<Film> SearchFilm(string title)
+        {
+            var fm = _db.Films.Where(t => t.Title.Contains(title));
+            if (fm != null)
+                return fm;
+            else
+                return null;
+        }
 
     }
 }

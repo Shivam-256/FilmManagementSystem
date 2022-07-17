@@ -4,24 +4,44 @@
     ViewData["Title"] = "Index";
 }
 
-<body style="background-color:#EAF6F6;">
+@*<body style="background-color:#EAF6F6;">
 </body>
 <style>
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
-</style>
+</style>*@
 <p>
     <a asp-action="Create">Create New</a>
+
 </p>
-@*<p style="color:red">@TempData["message"]</p>
+<p style="color:red">@TempData["message"]</p>
 <div>
     <form asp-action="Search">
     <input type="text" id="txtTitle" name="txtTitle" />
     <input type="submit" value="search" />
     </form>
-</div>*@
+</div>
+<body> 
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+</body>
 <table class="table">
     <thead>
         <tr>
@@ -110,7 +130,7 @@ table, th, td {
                 @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Create", new { id=item.FilmId }) |
+                @Html.ActionLink("Edit", "Edit", new { id=item.FilmId }) |
                 @Html.ActionLink("Details", "Details", new { id=item.FilmId }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item.FilmId })  |
                

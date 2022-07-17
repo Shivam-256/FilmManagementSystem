@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AspNetCore_MVC_FMS.Models;
 
-namespace AspNetCore_Mvc_Demo.Controllers
+namespace AspNetCore_Mvc_FMS.Controllers
 
 {
 
@@ -46,10 +46,24 @@ namespace AspNetCore_Mvc_Demo.Controllers
                 Task<string> data = result.Content.ReadAsStringAsync();
 
                 cgyList = JsonConvert.DeserializeObject<IEnumerable<CategoryVM>>(data.Result);
+                {
+                    return View(cgyList);
+                }
 
             }
-
-            return View(cgyList);
+            else
+            {
+                if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    ViewBag.message = "You are unauthorized, Error";
+                else if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                    ViewBag.message = "Forbidden, Error";
+                else
+                    ViewBag.message = "Unknown error, Contact Admin";
+                {
+                    return RedirectToAction("ErrorHandling", "Home");
+                }
+            }
+           
 
         }
 
@@ -129,7 +143,7 @@ namespace AspNetCore_Mvc_Demo.Controllers
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token); 
 
-                Uri uri = new Uri("https://localhost:44320/api/languagess/" + id.ToString());
+                Uri uri = new Uri("https://localhost:44320/api/languages/" + id.ToString());
 
                 var result = client.DeleteAsync(uri).Result;
 
@@ -168,7 +182,7 @@ namespace AspNetCore_Mvc_Demo.Controllers
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token); 
 
-                Uri uri = new Uri("https://localhost:44376/api/employees/" + id);
+                Uri uri = new Uri("https://localhost:44320/api/categories/" + id);
 
                 var result = client.GetAsync(uri).Result;
 

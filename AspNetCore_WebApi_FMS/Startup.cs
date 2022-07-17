@@ -73,6 +73,10 @@ namespace AspNetCore_WebApi_FMS
             services.AddScoped<IRole, RoleRepository>();
             services.AddScoped<IUser, UserRepository>();
             services.AddScoped<ITableData, TableDataRepository>();
+            services.AddScoped<IFilm2, FilmRepository2>();
+            services.AddScoped<IActor2, ActorRepository2>();
+            services.AddScoped<ILanguage2, LanguageRepository2>();
+            services.AddScoped<ICategory2, CategoryRepository2>();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

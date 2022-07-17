@@ -23,6 +23,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Data.User>>> GetUsers()
+
         {
             return await _context.Users.Include(u => u.Role).ToListAsync();
         }
@@ -37,11 +38,23 @@ namespace AspNetCore_WebApi_FMS.Controllers
             }
             return user;
         }
+        [HttpGet("/getuserdetails/{name}")]
+        public async Task<ActionResult<Data.User>> GetUserByUsername(string name)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(f => f.UserName.Equals(name));
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return user;
+        }
+
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, Data.User user)
         {
+            //if (id != user.UserId)
             if (id != user.UserId)
             {
                 return BadRequest();

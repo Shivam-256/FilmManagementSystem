@@ -91,7 +91,12 @@ namespace AspNetCore_WebApi_FMS.Repositories
                 newFm.ActorId = fm.ActorId;
                 newFm.CategoryId = fm.CategoryId;
                 _db.SaveChanges();
+                //    return newFm;
             }
+            //else
+            //{
+            //    return null;
+            //}
         }
     }
 }

@@ -42,7 +42,7 @@ namespace AspNetCore_Mvc_FMS.Controllers
             //string token = Request.Cookies["jwttoken"];
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             Uri uri = new Uri("https://localhost:44320/api/users");
-            var result = client.PostAsJsonAsync(uri, user).Result;
+            var result = client.PostAsJsonAsync(uri,user).Result;
             if (result.IsSuccessStatusCode)
             {
                 return RedirectToAction("index", "home");
@@ -58,11 +58,12 @@ namespace AspNetCore_Mvc_FMS.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(LoginVM login, int RoleId)
+        public IActionResult Login(LoginVM login)
         {
             MyJwtToken jwttoken;
             using (HttpClient client = new HttpClient())
             {
+                int RoleId = 0;
                 Uri uri = new Uri("https://localhost:44320/api/users/" + login.UserName + "/" + login.Password);
                 var result = client.GetAsync(uri).Result;
                 if (result.IsSuccessStatusCode)
@@ -73,6 +74,17 @@ namespace AspNetCore_Mvc_FMS.Controllers
                     //HttpContext.Session.SetString("token", jwttoken.Token);
                     Response.Cookies.Append("username", login.UserName);
                     ViewBag.message = jwttoken.Token;
+                    //Uri uri2 = new Uri("https://localhost:44320/api/getuserdetails/" + login.UserName);
+                    //var result2 = client.GetAsync(uri2).Result;
+                    //var data2 = result2.Content.ReadAsStringAsync();
+                    //var Userdetails = JsonConvert.DeserializeObject<UserVM>(data2.Result);
+                    //RoleId = Userdetails.RoleId;
+                    //get user details
+                    Uri uri2 = new Uri("https://localhost:44320/getuserdetails/" + login.UserName);
+                    var userResult = client.GetAsync(uri2).Result;
+                    var userData = userResult.Content.ReadAsStringAsync();
+                    UserVM userDetails = JsonConvert.DeserializeObject<UserVM>(userData.Result);
+                    RoleId = userDetails.RoleId;
                 }
                 else
                 {
@@ -80,7 +92,8 @@ namespace AspNetCore_Mvc_FMS.Controllers
                 }
                 if(RoleId == 1)
                 {
-                    return RedirectToAction("index", "film");
+                    Response.Cookies.Append("Role", "Admin");
+                    return RedirectToAction("index", "admin");
                 }
                else
                 {
@@ -92,6 +105,7 @@ namespace AspNetCore_Mvc_FMS.Controllers
         public IActionResult Logout()
         {
             HttpContext.Response.Cookies.Delete("username");
+            HttpContext.Response.Cookies.Delete("Role");
             return RedirectToAction("login");
         }
     }

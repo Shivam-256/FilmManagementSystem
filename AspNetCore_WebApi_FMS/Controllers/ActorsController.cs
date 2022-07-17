@@ -1,14 +1,13 @@
 ﻿using AspNetCore_WebApi_FMS.Data;
 using AspNetCore_WebApi_FMS.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-
-
 namespace AspNetCore_WebApi_FMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize(Roles = "Admin")]
     public class ActorsController : ControllerBase
     {
         private IActor _repository;
@@ -22,8 +21,6 @@ namespace AspNetCore_WebApi_FMS.Controllers
             var actList = _repository.GetActors();
             return Ok(actList);
         }
-
-
 
         [HttpGet]
         [Route("{actorId}")]
@@ -39,9 +36,6 @@ namespace AspNetCore_WebApi_FMS.Controllers
                 return NotFound();
             }
         }
-
-
-
         [HttpPost]
         public IActionResult Post(Actor act)
         {
@@ -52,6 +46,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
 
 
         [HttpDelete]
+        [Route("{actorId}")]
         public IActionResult Delete(int actorId)
         {
             bool result = _repository.DeleteActor(actorId);
@@ -65,9 +60,8 @@ namespace AspNetCore_WebApi_FMS.Controllers
             }
         }
 
-
-
         [HttpPut]
+        [Route("{actorId}")]
         public IActionResult Put(int actorId, [FromBody] Actor act)
         {
             _repository.UpdateActor(actorId, act);

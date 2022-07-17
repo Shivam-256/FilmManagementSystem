@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AspNetCore_MVC_FMS.Models;
 
-namespace AspNetCore_Mvc_Demo.Controllers
+namespace AspNetCore_Mvc_FMS.Controllers
 {
     public class LanguageController : Controller
     {
@@ -27,8 +27,23 @@ namespace AspNetCore_Mvc_Demo.Controllers
             {
                 Task<string> data = result.Content.ReadAsStringAsync();
                 lngList = JsonConvert.DeserializeObject<IEnumerable<LanguageVM>>(data.Result);
+                {
+                    return View(lngList);
+                }
             }
-            return View(lngList);
+            else
+            {
+
+                if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    ViewBag.message = "You are unauthorized, Error";
+                else if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                    ViewBag.message = "Forbidden, Error";
+                else
+                    ViewBag.message = "Unknown error, Contact Admin";
+                {
+                    return RedirectToAction("ErrorHandling", "Home");
+                }
+            }
         }
         public IActionResult Create()
         {

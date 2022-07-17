@@ -34,59 +34,46 @@
             <div class="form-group">
                 <label asp-for="LanguageId" class="control-label"></label>
                @* <input asp-for="LanguageId" class="form-control" />*@
-               <select asp-for="LanguageId" asp-items=ViewBag.lngList class="form-control" >
-                <option>Select Language</option>
-                @*<option value="marathi">Marathi</option>
-                <option value="hindi">Hindi</option>
-                <option value="telugu">Telugu</option>
-                <option value="english">English</option>*@
+               <select asp-for="LanguageId" asp-items="@ViewBag.lngList" class="form-control" >
                 </select>
                 <span asp-validation-for="LanguageId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           @* <div class="form-group">
                 <label asp-for="RentalDuration" class="control-label"></label>
                 <input asp-for="RentalDuration" class="form-control" />
                 <span asp-validation-for="RentalDuration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div>*@
+           @* <div class="form-group">
                 <label asp-for="Length" class="control-label"></label>
                 <input asp-for="Length" class="form-control" />
                 <span asp-validation-for="Length" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div>*@
+            @*<div class="form-group">
                 <label asp-for="ReplacementCost" class="control-label"></label>
                 <input asp-for="ReplacementCost" class="form-control" />
                 <span asp-validation-for="ReplacementCost" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Rating" class="control-label"></label>
                 <input asp-for="Rating" class="form-control" />
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           @* <div class="form-group">
                 <label asp-for="SpecialFeatures" class="control-label"></label>
                 <input asp-for="SpecialFeatures" class="form-control" />
                 <span asp-validation-for="SpecialFeatures" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="ActorId" class="control-label"></label>
-                @*<input asp-for="ActorId" class="form-control" />*@
-                @*<select asp-for="ActorId" asp-items=ViewBag.actList class="form-control" >
-                <option>Select Actor</option>
-                 </select>*@
+               @* <input asp-for="ActorId" class="form-control" />*@
+                <select asp-for="ActorId" asp-items="@ViewBag.actList" class="form-control" >
+                 </select>
                 <span asp-validation-for="ActorId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
                 @*<input asp-for="CategoryId" class="form-control" />*@
-                <select asp-for="CategoryId" asp-items=ViewBag.cgyList class="form-control" >
-                <option>Select Category</option>
-               @* <option value="mystery">Mystery</option>
-                <option value="adventure">Adventure</option>
-                <option value="action">Action</option>
-                <option value="drama">Drama</option>
-                <option value="romance">Romance</option>
-                <option value="comedy">Comedy</option>*@
+                <select asp-for="CategoryId" asp-items="@ViewBag.cgyList" class="form-control" >
                  </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>

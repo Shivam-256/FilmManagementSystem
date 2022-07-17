@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AspNetCore_MVC_FMS.Models;
 
-namespace AspNetCore_Mvc_Demo.Controllers
+namespace AspNetCore_Mvc_FMS.Controllers
 {
     public class ActorController : Controller
     {
@@ -26,8 +26,23 @@ namespace AspNetCore_Mvc_Demo.Controllers
             {
                 Task<string> data = result.Content.ReadAsStringAsync();
                 actList = JsonConvert.DeserializeObject<IEnumerable<ActorVM>>(data.Result);
+                {
+                    return View(actList);
+                }
             }
-            return View(actList);
+            else
+            {
+                if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    ViewBag.message = "You are unauthorized, Error";
+                else if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                    ViewBag.message = "Forbidden, Error";
+                else
+                    ViewBag.message = "Unknown error, Contact Admin";
+                {
+                    return RedirectToAction("ErrorHandling", "Home");
+                }
+            }
+            
         }
         public IActionResult Create()
         {
@@ -97,7 +112,7 @@ namespace AspNetCore_Mvc_Demo.Controllers
                 string token = Request.Cookies["jwttoken"];
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                Uri uri = new Uri("https://localhost:44320/api/actor/" + id);
+                Uri uri = new Uri("https://localhost:44320/api/actors/" + id);
                 var result = client.GetAsync(uri).Result;
                 if (result.IsSuccessStatusCode)
                 {
@@ -121,7 +136,7 @@ namespace AspNetCore_Mvc_Demo.Controllers
                 string token = Request.Cookies["jwttoken"];
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                Uri uri = new Uri("https://localhost:44320/api/actor/" + act.ActorId.ToString());
+                Uri uri = new Uri("https://localhost:44320/api/actors/" + act.ActorId.ToString());
                 var result = client.PutAsJsonAsync(uri, act).Result;
                 if (result.IsSuccessStatusCode)
                 {

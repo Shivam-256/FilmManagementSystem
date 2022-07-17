@@ -62,6 +62,15 @@ namespace AspNetCore_WebApi_FMS.Repositories
                 _db.SaveChanges();
             }
         }
+
+        public bool ValidateUser(User user)
+        {
+           var data = _db.Users.FirstOrDefault(u => u.UserName == user.UserName && u.Password == user.Password);
+            if(data == null)
+                return false;
+            else
+                return true;
+        }
     }
 }
 

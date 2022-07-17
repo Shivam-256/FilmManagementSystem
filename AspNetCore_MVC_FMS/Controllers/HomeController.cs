@@ -18,6 +18,11 @@ namespace AspNetCore_MVC_FMS.Controllers
             _logger = logger;
         }
 
+        public IActionResult ErrorHandling()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();

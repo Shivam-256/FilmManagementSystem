@@ -42,7 +42,7 @@ namespace AspNetCore_WebApi_FMS.Repositories
             Claim c2 = new Claim(ClaimTypes.Role, u.Role.RoleName);
             ClaimsIdentity cIdentity = new ClaimsIdentity(new Claim[] { c1, c2 });
 
-            // tokenDescriptor.Subject = cIdentity;
+            tokenDescriptor.Subject = cIdentity;
             tokenDescriptor.Expires = DateTime.UtcNow.AddMinutes(10);
             tokenDescriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature);
             var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -1,5 +1,6 @@
 ﻿using AspNetCore_WebApi_FMS.Data;
 using AspNetCore_WebApi_FMS.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   //[Authorize(Roles = "Admin")]
     public class LanguagesController : ControllerBase
     {
         private ILanguage _repository;
@@ -44,6 +46,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
         }
 
         [HttpDelete]
+        [Route("{languageId}")]
         public IActionResult Delete(int languageId)
         {
             bool result = _repository.DeleteLanguage(languageId);
@@ -58,6 +61,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
         }
 
         [HttpPut]
+        [Route("{languageId}")]
         public IActionResult Put(int languageId, [FromBody] Language lng)
         {
             _repository.UpdateLanguage(languageId, lng);

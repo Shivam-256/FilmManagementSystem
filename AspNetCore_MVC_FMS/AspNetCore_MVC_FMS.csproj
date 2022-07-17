@@ -11,4 +11,8 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.20.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspNetCore_WebApi_FMS\AspNetCore_WebApi_FMS.csproj" />
+  </ItemGroup>
+
 </Project>

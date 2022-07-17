@@ -1,5 +1,6 @@
 ﻿using AspNetCore_WebApi_FMS.Data;
 using AspNetCore_WebApi_FMS.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize(Roles = "Admin")]
     public class FilmsController : ControllerBase
     {
         private IFilm _repository;
@@ -16,6 +18,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
             this._repository = repository;
         }
         [HttpGet]
+        //[AllowAnonymous]
         public IActionResult Get()
         {
             var fmList = _repository.GetFilms();
@@ -26,10 +29,10 @@ namespace AspNetCore_WebApi_FMS.Controllers
         [Route("{title}")]
         public IActionResult Get(string title)
         {
-            IEnumerable<Film> obj = _repository.SearchFilm(title);
-            if (obj != null)
+            IEnumerable<Film> fmList = _repository.SearchFilm(title);
+            if (fmList != null)
             {
-                return Ok(obj);
+                return Ok(fmList);
             }
             else
             {
@@ -45,6 +48,8 @@ namespace AspNetCore_WebApi_FMS.Controllers
         }
 
         [HttpDelete]
+        [Route("{filmId}")]
+
         public IActionResult Delete(int filmId)
         {
             bool result = _repository.DeleteFilm(filmId);
@@ -59,6 +64,7 @@ namespace AspNetCore_WebApi_FMS.Controllers
         }
 
         [HttpPut]
+        [Route("{filmId}")]
         public IActionResult Put(int filmId, [FromBody] Film fm)
         {
             _repository.UpdateFilm(filmId, fm);

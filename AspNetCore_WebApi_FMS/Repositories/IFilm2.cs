@@ -5,6 +5,7 @@ namespace AspNetCore_WebApi_FMS.Repositories
 {
     public interface IFilm2
     {
+        IEnumerable<Film> SearchFilm(string title);
         IEnumerable<Film> GetFilms();
     }
 }
